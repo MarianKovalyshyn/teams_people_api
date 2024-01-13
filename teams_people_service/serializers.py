@@ -6,7 +6,17 @@ from teams_people_service.models import Person, Team
 class TeamSerializer(serializers.ModelSerializer):
     class Meta:
         model = Team
+        fields = ('id', 'name', 'persons')
+
+
+class TeamListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Team
         fields = ('id', 'name')
+
+
+class TeamDetailSerializer(TeamSerializer):
+    persons = serializers.StringRelatedField(many=True)
 
 
 class PersonSerializer(serializers.ModelSerializer):
