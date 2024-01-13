@@ -1,12 +1,19 @@
 from rest_framework import viewsets
 
 from teams_people_service.models import Person, Team
-from teams_people_service.serializers import PersonSerializer, TeamSerializer
+from teams_people_service.serializers import PersonSerializer, PersonListSerializer, PersonDetailSerializer, TeamSerializer
 
 
 class PersonViewSet(viewsets.ModelViewSet):
     queryset = Person.objects.all()
     serializer_class = PersonSerializer
+
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return PersonListSerializer
+        if self.action == 'retrieve':
+            return PersonDetailSerializer
+        return self.serializer_class
 
 
 class TeamViewSet(viewsets.ModelViewSet):
